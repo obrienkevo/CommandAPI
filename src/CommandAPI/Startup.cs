@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CommandAPI.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +19,12 @@ namespace CommandAPI
         {
             // register services to enable use of controllers in application
             services.AddControllers();
+
+            // Dependency Injection - register our service: our interface to a specific concrete class(implementation)
+            // We use the service collection (services) to register our ICommandAPIRepo with MockCommandAPIRepo
+            // AddScoped Method: To do with Service Lifetimes. 
+            //          > For this, a service is created once per client request(connection)
+            services.AddScoped<ICommandAPIRepo, MockCommandAPIRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
